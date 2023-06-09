@@ -1,0 +1,28 @@
+<configuration status = "warn">
+    <appenders>
+        <cosole name = "console" target = "SYSTEM_OUT">
+            <PatternLayout pattern = "%d{yyy-MM-dd HH:mm:ss} %p %c - %m%n"/>
+            <TimeFilter staet = "16:00:00" end = "05:15:00" onMatch= "ACCEPT" onMissMatch= "DENY"/>
+        </cosole>
+        <rollingFile name = "rollingFile" fileName = "logs/app.log" filePattern = "logs/app-$d{MM-dd-yyyy}-%i.gz">
+            <PatternLayout pattern = "%d{yyy-MM-dd HH:mm:ss} %p %c - %m%n"/>
+            <policies>
+                <sizeBazedTriggeringPolicy size = "50 KB"/>
+            </policies>
+
+        </rollingFile>
+        <DefaultRolloverStrategy>
+            <Delete basePath="./logs/">
+                <IfFileName glob="hippodrome*.log" />
+                <IfLastModified age="7d" />
+            </Delete>
+        </DefaultRolloverStrategy>
+    </appenders>
+    <loggers>
+        <root level = "debug">
+            <AppenderRef ref = "console"/>
+            <AppenderRef ref = "rollingFile"/>
+        </root>
+    </loggers>
+
+</configuration>
